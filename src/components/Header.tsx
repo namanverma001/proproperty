@@ -14,6 +14,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const buyLinks = [
+    { name: "🏠 Submit Buy Requirement", href: "/buy", highlight: true },
+    { name: "Browse Properties for Sale", href: "/properties?listingType=buy" },
     { name: "Apartments", href: "/properties?type=Apartment" },
     { name: "Villas", href: "/properties?type=Villa" },
     { name: "Independent Houses", href: "/properties?type=House" },
@@ -22,6 +24,8 @@ const Header = () => {
   ];
 
   const rentLinks = [
+    { name: "🔑 Submit Rent Requirement", href: "/rent", highlight: true },
+    { name: "Browse Rentals", href: "/properties?listingType=rent" },
     { name: "Apartments for Rent", href: "/properties?listingType=rent&type=Apartment" },
     { name: "Villas for Rent", href: "/properties?listingType=rent&type=Villa" },
     { name: "PG/Co-living", href: "/properties?listingType=rent&type=PG" },
@@ -84,10 +88,12 @@ const Header = () => {
               <DropdownMenuTrigger className="flex items-center gap-1 px-4 py-2 text-foreground font-medium hover:text-primary transition-colors">
                 Buy <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
-                {buyLinks.map((link) => (
-                  <DropdownMenuItem key={link.name} asChild>
-                    <Link to={link.href} className="cursor-pointer">{link.name}</Link>
+              <DropdownMenuContent align="start" className="w-64">
+                {buyLinks.map((link, index) => (
+                  <DropdownMenuItem key={link.name} asChild className={link.highlight ? "bg-primary/5 font-semibold text-primary" : ""}>
+                    <Link to={link.href} className={`cursor-pointer ${index === 1 ? "border-b pb-2 mb-1" : ""}`}>
+                      {link.name}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -98,10 +104,12 @@ const Header = () => {
               <DropdownMenuTrigger className="flex items-center gap-1 px-4 py-2 text-foreground font-medium hover:text-primary transition-colors">
                 Rent <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-56">
-                {rentLinks.map((link) => (
-                  <DropdownMenuItem key={link.name} asChild>
-                    <Link to={link.href} className="cursor-pointer">{link.name}</Link>
+              <DropdownMenuContent align="start" className="w-64">
+                {rentLinks.map((link, index) => (
+                  <DropdownMenuItem key={link.name} asChild className={link.highlight ? "bg-green-50 font-semibold text-green-700" : ""}>
+                    <Link to={link.href} className={`cursor-pointer ${index === 1 ? "border-b pb-2 mb-1" : ""}`}>
+                      {link.name}
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -142,11 +150,41 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link to="/sell">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold">
-                Post Property <span className="ml-1 text-xs bg-accent text-accent-foreground px-1.5 py-0.5 rounded">FREE</span>
-              </Button>
-            </Link>
+            {/* Looking to Buy/Rent Button */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white font-semibold">
+                  Looking to Buy
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link to="/buy" className="cursor-pointer font-medium">Buy Property</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/rent" className="cursor-pointer font-medium">Rent Property</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Post Property Button */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold">
+                  Post Property <span className="ml-1 text-xs bg-accent text-accent-foreground px-1.5 py-0.5 rounded">FREE</span>
+                  <ChevronDown className="w-4 h-4 ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link to="/sell" className="cursor-pointer">Sell Property</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/lease" className="cursor-pointer">Rent/Lease Property</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile Menu Button */}
@@ -166,18 +204,44 @@ const Header = () => {
           <div className="container-main py-4">
             <nav className="flex flex-col gap-2">
               <Link to="/" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Home</Link>
-              <Link to="/properties" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Buy</Link>
-              <Link to="/properties?listingType=rent" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Rent</Link>
+              <Link to="/properties" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Browse Properties</Link>
+              <Link to="/properties?listingType=rent" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Browse Rentals</Link>
               <Link to="/properties?type=Plot" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Plots/Land</Link>
               <Link to="/properties?type=Commercial" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Commercial</Link>
               <Link to="/about" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>About</Link>
               <Link to="/contact" className="px-4 py-3 text-foreground font-medium hover:bg-muted rounded-lg" onClick={() => setIsMenuOpen(false)}>Contact</Link>
-              <div className="pt-4 border-t border-border">
-                <Link to="/sell" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full bg-accent text-accent-foreground">
-                    Post Property FREE
-                  </Button>
-                </Link>
+
+              {/* CTA Buttons */}
+              <div className="pt-4 border-t border-border space-y-3">
+                {/* Looking to Buy/Rent */}
+                <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Looking to Buy/Rent?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link to="/buy" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
+                      Buy Property
+                    </Button>
+                  </Link>
+                  <Link to="/rent" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
+                      Rent Property
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Post Property */}
+                <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider pt-2">Want to Sell/Lease?</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link to="/sell" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-primary text-primary-foreground">
+                      Sell Property
+                    </Button>
+                  </Link>
+                  <Link to="/lease" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-accent text-accent-foreground">
+                      Lease Property
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </nav>
           </div>

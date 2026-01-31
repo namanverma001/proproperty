@@ -2,10 +2,73 @@ import PropertyCard from "./PropertyCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { properties } from "@/data/properties";
+import { usePropertyStore } from "@/store/propertyStore";
+import { properties as sampleProperties } from "@/data/properties";
+
+// Unified display interface
+interface DisplayProperty {
+  id: string;
+  images: string[];
+  title: string;
+  location: string;
+  city: string;
+  priceUnit: string;
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  areaUnit: string;
+  type: string;
+  isFeatured: boolean;
+  isNew: boolean;
+}
 
 const FeaturedProperties = () => {
-  const featuredProperties = properties.filter(p => p.isFeatured).slice(0, 4);
+  const { getPublishedProperties } = usePropertyStore();
+
+  // Get published properties from the store
+  const publishedSubmissions = getPublishedProperties();
+
+  // Convert store submissions to display format
+  const storeProperties: DisplayProperty[] = publishedSubmissions
+    .filter(p => p.isFeatured)
+    .map(p => ({
+      id: p.id,
+      images: p.images.length > 0 ? p.images : ['/placeholder.jpg'],
+      title: p.title,
+      location: p.location,
+      city: p.city,
+      priceUnit: p.priceUnit,
+      bedrooms: p.bedrooms,
+      bathrooms: p.bathrooms,
+      area: p.area,
+      areaUnit: p.areaUnit,
+      type: p.type,
+      isFeatured: p.isFeatured || false,
+      isNew: p.isNew || false,
+    }));
+
+  // Sample featured properties formatted consistently
+  const sampleFeatured: DisplayProperty[] = sampleProperties
+    .filter(p => p.isFeatured)
+    .slice(0, 4)
+    .map(p => ({
+      id: p.id,
+      images: p.images,
+      title: p.title,
+      location: p.location,
+      city: p.city,
+      priceUnit: p.priceUnit,
+      bedrooms: p.bedrooms,
+      bathrooms: p.bathrooms,
+      area: p.area,
+      areaUnit: p.areaUnit,
+      type: p.type,
+      isFeatured: p.isFeatured,
+      isNew: p.isNew,
+    }));
+
+  // Combine: store properties first (newest), then sample data, max 4
+  const featuredProperties = [...storeProperties, ...sampleFeatured].slice(0, 4);
 
   return (
     <section className="section-padding bg-background">
@@ -34,8 +97,8 @@ const FeaturedProperties = () => {
         {/* Properties Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProperties.map((property) => (
-            <PropertyCard 
-              key={property.id} 
+            <PropertyCard
+              key={property.id}
               id={property.id}
               image={property.images[0]}
               title={property.title}
