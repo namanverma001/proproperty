@@ -15,7 +15,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { PlusCircle, Save, Eye, CheckCircle2 } from "lucide-react";
+import { PlusCircle, Save, Eye, CheckCircle2, ImageIcon } from "lucide-react";
+import ImageUpload from "@/components/ImageUpload";
 
 const CreateProperty = () => {
     const { createAdminProperty, locations, amenities } = usePropertyStore();
@@ -24,14 +25,15 @@ const CreateProperty = () => {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-        price: "",
+        priceMin: "",
+        priceMax: "",
         city: "",
         location: "",
         address: "",
         pincode: "",
         type: "Apartment",
-        listingCategory: "sell" as const,
-        propertyCategory: "residential" as const,
+        listingCategory: "sell" as "sell" | "lease",
+        propertyCategory: "residential" as "residential" | "commercial",
         bedrooms: "",
         bathrooms: "",
         area: "",
@@ -46,6 +48,7 @@ const CreateProperty = () => {
         ownerPhone: "",
         ownerEmail: "",
         selectedAmenities: [] as string[],
+        images: [] as string[],
         isFeatured: false,
         publishImmediately: true,
     });
@@ -66,36 +69,48 @@ const CreateProperty = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.title || !formData.price || !formData.city || !formData.ownerName || !formData.ownerPhone) {
+        if (!formData.title || !formData.priceMin || !formData.priceMax || !formData.city || !formData.ownerName || !formData.ownerPhone) {
             toast.error("Please fill in all required fields");
             return;
         }
 
-        const priceNum = parseInt(formData.price);
-        let priceUnit = "";
+        const priceMinNum = parseInt(formData.priceMin);
+        const priceMaxNum = parseInt(formData.priceMax);
 
-        if (formData.listingCategory === 'lease') {
-            if (priceNum >= 100000) {
-                priceUnit = `₹${(priceNum / 100000).toFixed(1)} Lac/month`;
-            } else {
-                priceUnit = `₹${priceNum.toLocaleString()}/month`;
-            }
-        } else {
-            if (priceNum >= 10000000) {
-                priceUnit = `₹${(priceNum / 10000000).toFixed(2)} Cr`;
-            } else if (priceNum >= 100000) {
-                priceUnit = `₹${(priceNum / 100000).toFixed(2)} Lac`;
-            } else {
-                priceUnit = `₹${priceNum.toLocaleString()}`;
-            }
+        if (priceMinNum > priceMaxNum) {
+            toast.error("Minimum price cannot be greater than maximum price");
+            return;
         }
+
+        // Format price range for display
+        const formatPrice = (num: number, isLease: boolean) => {
+            if (isLease) {
+                if (num >= 100000) {
+                    return `₹${(num / 100000).toFixed(1)} Lac`;
+                } else {
+                    return `₹${num.toLocaleString()}`;
+                }
+            } else {
+                if (num >= 10000000) {
+                    return `₹${(num / 10000000).toFixed(2)} Cr`;
+                } else if (num >= 100000) {
+                    return `₹${(num / 100000).toFixed(2)} Lac`;
+                } else {
+                    return `₹${num.toLocaleString()}`;
+                }
+            }
+        };
+
+        const isLease = formData.listingCategory === 'lease';
+        const priceUnit = `${formatPrice(priceMinNum, isLease)} - ${formatPrice(priceMaxNum, isLease)}${isLease ? '/month' : ''}`;
 
         const status: PropertyStatus = formData.publishImmediately ? 'published' : 'approved';
 
         createAdminProperty({
             title: formData.title,
             description: formData.description,
-            price: priceNum,
+            price: priceMinNum,
+            priceMax: priceMaxNum,
             priceUnit,
             city: formData.city,
             location: formData.location,
@@ -110,7 +125,7 @@ const CreateProperty = () => {
             listingCategory: formData.listingCategory,
             propertyCategory: formData.propertyCategory,
             amenities: formData.selectedAmenities,
-            images: [],
+            images: formData.images,
             constructionStatus: formData.constructionStatus,
             furnishing: formData.furnishing,
             facing: formData.facing,
@@ -135,7 +150,8 @@ const CreateProperty = () => {
         setFormData({
             title: "",
             description: "",
-            price: "",
+            priceMin: "",
+            priceMax: "",
             city: "",
             location: "",
             address: "",
@@ -157,6 +173,7 @@ const CreateProperty = () => {
             ownerPhone: "",
             ownerEmail: "",
             selectedAmenities: [],
+            images: [],
             isFeatured: false,
             publishImmediately: true,
         });
@@ -277,16 +294,31 @@ const CreateProperty = () => {
                                             </SelectContent>
                                         </Select>
                                     </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <Label htmlFor="price">
-                                            {formData.listingCategory === 'sell' ? 'Price (₹)' : 'Monthly Rent (₹)'} *
+                                        <Label htmlFor="priceMin">
+                                            {formData.listingCategory === 'sell' ? 'Min Price (₹)' : 'Min Rent (₹)'} *
                                         </Label>
                                         <Input
-                                            id="price"
+                                            id="priceMin"
                                             type="number"
-                                            placeholder={formData.listingCategory === 'sell' ? "e.g., 5000000" : "e.g., 25000"}
-                                            value={formData.price}
-                                            onChange={(e) => handleInputChange("price", e.target.value)}
+                                            placeholder={formData.listingCategory === 'sell' ? "e.g., 5000000" : "e.g., 20000"}
+                                            value={formData.priceMin}
+                                            onChange={(e) => handleInputChange("priceMin", e.target.value)}
+                                            className="mt-1"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Label htmlFor="priceMax">
+                                            {formData.listingCategory === 'sell' ? 'Max Price (₹)' : 'Max Rent (₹)'} *
+                                        </Label>
+                                        <Input
+                                            id="priceMax"
+                                            type="number"
+                                            placeholder={formData.listingCategory === 'sell' ? "e.g., 7500000" : "e.g., 35000"}
+                                            value={formData.priceMax}
+                                            onChange={(e) => handleInputChange("priceMax", e.target.value)}
                                             className="mt-1"
                                         />
                                     </div>
@@ -499,6 +531,27 @@ const CreateProperty = () => {
                                         </div>
                                     ))}
                                 </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Property Images */}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <ImageIcon className="w-5 h-5" />
+                                    Property Images *
+                                </CardTitle>
+                                <CardDescription>
+                                    Upload up to 5 property images (JPG, JPEG, PNG format only)
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ImageUpload
+                                    images={formData.images}
+                                    onImagesChange={(images) => handleInputChange("images", images)}
+                                    maxImages={5}
+                                    maxSizeMB={2}
+                                />
                             </CardContent>
                         </Card>
                     </div>

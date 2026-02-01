@@ -13,6 +13,7 @@ export interface PropertySubmission {
   title: string;
   description: string;
   price: number;
+  priceMax?: number;
   priceUnit: string;
 
   // Location

@@ -6,13 +6,18 @@ interface ImageUploadProps {
     images: string[];
     onImagesChange: (images: string[]) => void;
     maxImages?: number;
+    minImages?: number;
     maxSizeMB?: number;
 }
+
+const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
+const ALLOWED_EXTENSIONS = '.jpg, .jpeg, .png';
 
 const ImageUpload = ({
     images,
     onImagesChange,
-    maxImages = 5,
+    maxImages = 10,
+    minImages = 0,
     maxSizeMB = 2
 }: ImageUploadProps) => {
     const [uploading, setUploading] = useState(false);
@@ -32,6 +37,17 @@ const ImageUpload = ({
         let processed = 0;
 
         Array.from(files).forEach((file) => {
+            // Check file type
+            if (!ALLOWED_TYPES.includes(file.type.toLowerCase())) {
+                toast.error(`File ${file.name} is not a valid format. Only JPG, JPEG, PNG allowed.`);
+                processed++;
+                if (processed === files.length) {
+                    setUploading(false);
+                    onImagesChange(newImages);
+                }
+                return;
+            }
+
             if (file.size > maxSizeMB * 1024 * 1024) {
                 toast.error(`File ${file.name} is too large. Max ${maxSizeMB}MB allowed.`);
                 processed++;
@@ -77,7 +93,7 @@ const ImageUpload = ({
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors">
                 <input
                     type="file"
-                    accept="image/*"
+                    accept=".jpg,.jpeg,.png"
                     multiple
                     onChange={handleImageUpload}
                     className="hidden"
@@ -93,7 +109,7 @@ const ImageUpload = ({
                         {uploading ? 'Uploading...' : 'Click to upload images'}
                     </span>
                     <span className="text-xs text-gray-400">
-                        Max {maxImages} images, {maxSizeMB}MB each (JPG, PNG)
+                        Upload up to {maxImages} images • {maxSizeMB}MB each • JPG, JPEG, PNG only
                     </span>
                 </label>
             </div>
