@@ -43,12 +43,12 @@ const CallToAction = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/sell">
                   <Button size="lg" className="bg-accent hover:bg-green-brand-light text-accent-foreground font-semibold gap-2">
-                    Post Your Property Free
+                    List Your Property
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
                 <a href="tel:+919876543210">
-                  <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10 gap-2">
+                  <Button size="lg" variant="secondary" className="hover:bg-primary/90 hover:text-primary-foreground gap-2">
                     <Phone className="w-5 h-5" />
                     Call Us Now
                   </Button>

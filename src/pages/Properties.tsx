@@ -218,7 +218,7 @@ const Properties = () => {
 
       <main>
         {/* Search Header */}
-        <section className="bg-primary py-8">
+        <section className="bg-primary pt-32 pb-8 md:pt-40">
           <div className="container-main">
             <h1 className="text-2xl md:text-3xl font-display font-bold text-primary-foreground mb-6">
               {propertyCategory === "residential" ? "Residential" : "Commercial"} Properties {listingType === "buy" ? "for Sale" : "for Rent"}

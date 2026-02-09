@@ -151,7 +151,7 @@ const Buy = () => {
 
             <main>
                 {/* Hero Section */}
-                <section className="bg-gradient-to-br from-primary to-primary/80 py-12 md:py-16">
+                <section className="bg-gradient-to-br from-primary to-primary/80 pt-32 pb-12 md:pt-40 md:pb-16">
                     <div className="container-main">
                         <div className="max-w-3xl">
                             <h1 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-4">

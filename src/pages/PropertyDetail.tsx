@@ -108,7 +108,7 @@ const PropertyDetail = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pb-16">
+      <main className="pt-28 pb-16 md:pt-36">
         {/* Breadcrumb */}
         <div className="bg-muted py-4">
           <div className="container-main">
@@ -324,17 +324,7 @@ const PropertyDetail = () => {
             {/* Sidebar - Contact Form */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 bg-card rounded-xl p-6 shadow-card">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Contact Owner</h3>
-
-                <div className="flex items-center gap-3 p-4 bg-muted rounded-lg mb-6">
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-lg">
-                    {property.ownerName.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-foreground">{property.ownerName}</p>
-                    <p className="text-sm text-muted-foreground">Property Owner</p>
-                  </div>
-                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-4">Contact Us</h3>
 
                 <form onSubmit={handleContactSubmit} className="space-y-4">
                   <Input
@@ -373,18 +363,12 @@ const PropertyDetail = () => {
                   <a href={`tel:${property.ownerPhone}`}>
                     <Button variant="outline" className="w-full">
                       <Phone className="w-4 h-4 mr-2" />
-                      Call Owner
+                      Call Us
                     </Button>
                   </a>
                 </div>
 
-                <p className="text-xs text-muted-foreground text-center mt-4">
-                  Posted on {new Date(property.postedDate).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric"
-                  })}
-                </p>
+
               </div>
             </div>
           </div>
@@ -392,7 +376,7 @@ const PropertyDetail = () => {
       </main>
 
       <Footer />
-    </div>
+    </div >
   );
 };
 

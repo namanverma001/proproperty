@@ -13,7 +13,7 @@ const Lease = () => {
 
             <main>
                 {/* Hero Section */}
-                <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white py-16">
+                <section className="bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white pt-32 pb-16 md:pt-40">
                     <div className="container-main">
                         <div className="max-w-3xl mx-auto text-center">
                             <div className="flex items-center justify-center gap-3 mb-4">

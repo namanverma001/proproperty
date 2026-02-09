@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/propropertylogo.jpeg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -57,7 +57,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-6">
-              <img src={logo} alt="Pro Property" className="h-16 w-auto bg-white rounded-lg p-1" />
+              <img src={logo} alt="Pro Property" className="h-24 w-auto bg-white rounded-lg p-1" />
             </Link>
             <p className="text-primary-foreground/80 mb-6 text-sm leading-relaxed">
               Building Futures since 2026. India's most trusted property portal for buying, selling, and renting properties.

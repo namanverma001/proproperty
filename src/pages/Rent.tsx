@@ -151,7 +151,7 @@ const Rent = () => {
 
             <main>
                 {/* Hero Section */}
-                <section className="bg-gradient-to-br from-green-600 to-green-500 py-12 md:py-16">
+                <section className="bg-gradient-to-br from-green-600 to-green-500 pt-32 pb-12 md:pt-40 md:pb-16">
                     <div className="container-main">
                         <div className="max-w-3xl">
                             <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">

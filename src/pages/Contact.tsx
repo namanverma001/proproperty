@@ -29,18 +29,7 @@ const Contact = () => {
       phone: "+91 22 1234 5678",
       email: "mumbai@proproperty.in",
     },
-    {
-      city: "Bangalore",
-      address: "456 Tech Park, Whitefield, Bangalore 560066",
-      phone: "+91 80 2345 6789",
-      email: "bangalore@proproperty.in",
-    },
-    {
-      city: "Delhi NCR",
-      address: "789 Corporate Tower, Cyber City, Gurgaon 122002",
-      phone: "+91 124 345 6789",
-      email: "delhi@proproperty.in",
-    },
+
   ];
 
   const contactMethods = [
@@ -80,7 +69,7 @@ const Contact = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-primary py-16 md:py-20">
+        <section className="bg-primary pt-32 pb-16 md:pt-40 md:pb-20">
           <div className="container-main text-center">
             <h1 className="text-3xl md:text-5xl font-display font-bold text-primary-foreground mb-4">
               Get in Touch
@@ -121,7 +110,7 @@ const Contact = () => {
               <div>
                 <h2 className="text-2xl font-display font-bold text-foreground mb-2">Send Us a Message</h2>
                 <p className="text-muted-foreground mb-6">Fill out the form below and we'll get back to you as soon as possible.</p>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -146,7 +135,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">Email Address *</label>
                     <Input
@@ -192,7 +181,7 @@ const Contact = () => {
               <div>
                 <h2 className="text-2xl font-display font-bold text-foreground mb-2">Our Offices</h2>
                 <p className="text-muted-foreground mb-6">Visit us at any of our offices across India.</p>
-                
+
                 <div className="space-y-4">
                   {offices.map((office) => (
                     <div key={office.city} className="p-5 bg-muted rounded-xl border border-border">

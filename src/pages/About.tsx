@@ -2,19 +2,20 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { 
-  Users, 
-  Award, 
-  Building2, 
-  TrendingUp, 
-  Target, 
+import {
+  Users,
+  Award,
+  Building2,
+  TrendingUp,
+  Target,
   Heart,
   CheckCircle2,
   ArrowRight,
   Shield,
   Clock
 } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/propropertylogo.jpeg";
+import heroImage from "@/assets/hero-building.jpg";
 
 const About = () => {
   const stats = [
@@ -67,7 +68,7 @@ const About = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-primary py-16 md:py-24">
+        <section className="bg-primary pt-32 pb-16 md:pt-40 md:pb-24">
           <div className="container-main">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -88,7 +89,7 @@ const About = () => {
                     </Button>
                   </Link>
                   <Link to="/contact">
-                    <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+                    <Button size="lg" variant="secondary" className="hover:bg-accent hover:text-accent-foreground">
                       Contact Us
                     </Button>
                   </Link>
@@ -116,59 +117,115 @@ const About = () => {
         </section>
 
         {/* Our Story */}
-        <section className="section-padding">
+        <section className="section-padding overflow-hidden">
           <div className="container-main">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="text-accent font-semibold text-sm uppercase tracking-wider">
-                Our Story
-              </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mt-4 mb-6">
-                From Vision to India's Fastest Growing Property Portal
-              </h2>
-              <div className="text-muted-foreground space-y-4 text-lg leading-relaxed">
-                <p>
-                  Founded in 2026 by Prabhas Kumar, Pro Property started with a simple vision: to make property search easy, transparent, and accessible for every Indian. What began as a small team with big dreams has now grown into one of India's most trusted real estate platforms.
-                </p>
-                <p>
-                  Our commitment to verification, transparency, and exceptional customer service has earned us the trust of homebuyers, sellers, and tenants across the nation. We leverage cutting-edge technology to provide a seamless property search experience.
-                </p>
-                <p>
-                  Today, with 50,000+ verified listings across 100+ cities, we continue to innovate and lead the real estate revolution in India.
-                </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Image Side */}
+              <div className="relative order-2 lg:order-1">
+                <div className="absolute inset-0 bg-accent/10 rounded-3xl transform rotate-3 scale-105" />
+                <img
+                  src={heroImage}
+                  alt="Our Building"
+                  className="relative rounded-3xl shadow-2xl w-full object-cover aspect-[4/3] transform -rotate-2 hover:rotate-0 transition-transform duration-500"
+                />
+                <div className="absolute -bottom-6 -right-6 bg-card p-6 rounded-xl shadow-xl border border-border hidden md:block animate-fade-in">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Growth Rate</p>
+                      <p className="text-xl font-bold text-foreground">150% YoY</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text Side */}
+              <div className="order-1 lg:order-2">
+                <span className="text-accent font-semibold text-sm uppercase tracking-wider">
+                  Our Story
+                </span>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mt-4 mb-6 leading-tight">
+                  From Vision to India's <span className="text-primary">Fastest Growing</span> Property Portal
+                </h2>
+                <div className="space-y-6 text-lg text-muted-foreground">
+                  <p className="leading-relaxed">
+                    Founded in 2026 by Prabhas Kumar, Pro Property started with a simple vision: to make property search <span className="text-foreground font-medium">easy, transparent, and accessible</span> for every Indian.
+                  </p>
+                  <p className="leading-relaxed">
+                    What began as a small team with big dreams has now grown into one of India's most trusted real estate platforms, driven by our commitment to verification and exceptional service.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-4 pt-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                        <Shield className="w-5 h-5 text-accent" />
+                      </div>
+                      <span className="font-medium text-foreground">100% Verified</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                        <Users className="w-5 h-5 text-accent" />
+                      </div>
+                      <span className="font-medium text-foreground">2M+ Users</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Timeline */}
-        <section className="section-padding bg-muted">
-          <div className="container-main">
-            <div className="text-center mb-12">
-              <span className="text-accent font-semibold text-sm uppercase tracking-wider">
+        <section className="section-padding bg-muted relative overflow-hidden">
+          {/* Decorative background */}
+          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+          <div className="container-main relative z-10">
+            <div className="text-center mb-16">
+              <span className="bg-accent/10 text-accent px-4 py-1.5 rounded-full font-semibold text-sm uppercase tracking-wider inline-block mb-4">
                 Our Journey
               </span>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mt-4">
+              <h2 className="text-3xl md:text-5xl font-display font-bold text-foreground">
                 Key Milestones
               </h2>
             </div>
 
-            <div className="max-w-3xl mx-auto">
-              {milestones.map((milestone, index) => (
-                <div key={index} className="flex gap-4 mb-8 last:mb-0">
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-accent-foreground font-bold text-sm">
-                      {milestone.year}
+            <div className="max-w-4xl mx-auto relative">
+              {/* Center Line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-primary/10 via-primary/40 to-primary/10 hidden md:block" />
+
+              <div className="space-y-12">
+                {milestones.map((milestone, index) => (
+                  <div key={index} className={`flex flex-col md:flex-row gap-8 items-center ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} group`}>
+
+                    {/* Content Card */}
+                    <div className="flex-1 w-full">
+                      <div className={`bg-card p-6 md:p-8 rounded-2xl shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-1 ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                        <div className={`md:hidden inline-block px-3 py-1 bg-primary/10 text-primary font-bold rounded-lg mb-3`}>
+                          {milestone.year}
+                        </div>
+                        <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">{milestone.title}</h3>
+                        <p className="text-muted-foreground leading-relaxed">{milestone.description}</p>
+                      </div>
                     </div>
-                    {index < milestones.length - 1 && (
-                      <div className="w-0.5 h-full bg-accent/30 mt-2" />
-                    )}
+
+                    {/* Timeline Node */}
+                    <div className="relative flex items-center justify-center z-10">
+                      <div className="w-12 h-12 md:w-16 md:h-16 bg-card rounded-full border-4 border-primary/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-full h-full rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-primary font-bold text-sm md:text-base">{milestone.year}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Spacer for alternating layout */}
+                    <div className="flex-1 hidden md:block" />
                   </div>
-                  <div className="flex-1 pb-8">
-                    <h3 className="font-semibold text-lg text-foreground">{milestone.title}</h3>
-                    <p className="text-muted-foreground mt-1">{milestone.description}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -241,7 +298,7 @@ const About = () => {
                 </Button>
               </Link>
               <Link to="/sell">
-                <Button size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
+                <Button size="lg" variant="secondary" className="hover:bg-accent hover:text-accent-foreground">
                   List Your Property
                 </Button>
               </Link>

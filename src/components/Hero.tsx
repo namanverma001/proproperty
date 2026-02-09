@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Building2, IndianRupee, Home, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,10 +14,46 @@ const Hero = () => {
   const [propertyType, setPropertyType] = useState("");
   const [budget, setBudget] = useState("");
 
+  // Animation State
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  const phrases = [
+    {
+      prefix: "Find Better Places to",
+      highlight: "Live, Work",
+      suffix: "and Wonder..."
+    },
+    {
+      prefix: "Discover Homes That",
+      highlight: "Match Your",
+      suffix: "Dreams..."
+    },
+    {
+      prefix: "Experience Luxury Living at",
+      highlight: "Affordable",
+      suffix: "Prices..."
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setFade(true);
+      }, 500); // Wait for fade out before changing text
+    }, 4000); // Change every 4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentPhrase = phrases[currentPhraseIndex];
+
   const handleSearch = () => {
     const params = new URLSearchParams();
     params.set("listingType", searchType === "buy" ? "buy" : "rent");
-    if (propertyType) params.set("type", propertyType);
+    if (propertyType && propertyType !== "all") params.set("type", propertyType);
     if (searchQuery) params.set("city", searchQuery);
     navigate(`/properties?${params.toString()}`);
   };
@@ -30,7 +66,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-[580px] md:min-h-[650px] flex items-center">
+    <section className="relative min-h-[85vh] flex items-center">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -42,7 +78,7 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-main w-full py-12">
+      <div className="relative z-10 container-main w-full pt-32 pb-12 md:pt-40">
         <div className="max-w-4xl mx-auto text-center">
           {/* Tagline */}
           <div className="inline-flex items-center gap-2 bg-accent/20 backdrop-blur-sm px-4 py-2 rounded-full mb-5 animate-fade-in">
@@ -53,10 +89,13 @@ const Hero = () => {
           </div>
 
           {/* Heading */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-primary-foreground mb-4 animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Find Better Places to 
-            <span className="text-accent"> Live, Work </span>
-            and Wonder...
+          {/* Heading */}
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-primary-foreground mb-4 min-h-[120px] md:min-h-[140px] flex flex-col justify-center transition-all duration-500">
+            <span className={`block transition-all duration-500 transform ${fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              {currentPhrase.prefix}
+              <span className="text-accent"> {currentPhrase.highlight} </span>
+              {currentPhrase.suffix}
+            </span>
           </h1>
 
           <p className="text-base md:text-lg text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: "0.2s" }}>
@@ -71,11 +110,10 @@ const Hero = () => {
                 <button
                   key={tab.id}
                   onClick={() => setSearchType(tab.id)}
-                  className={`flex-1 py-4 px-4 text-sm font-semibold transition-all relative ${
-                    searchType === tab.id
-                      ? "text-primary bg-muted"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                  }`}
+                  className={`flex-1 py-4 px-4 text-sm font-semibold transition-all relative ${searchType === tab.id
+                    ? "text-primary bg-muted"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    }`}
                 >
                   {tab.label}
                   {searchType === tab.id && (
@@ -109,6 +147,7 @@ const Hero = () => {
                     </div>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="all">All Residential</SelectItem>
                     <SelectItem value="Apartment">Flat/Apartment</SelectItem>
                     <SelectItem value="Villa">Villa</SelectItem>
                     <SelectItem value="House">House</SelectItem>
@@ -145,7 +184,7 @@ const Hero = () => {
                 </Select>
 
                 {/* Search Button */}
-                <Button 
+                <Button
                   onClick={handleSearch}
                   className="h-12 px-8 bg-accent hover:bg-green-brand-light text-accent-foreground font-semibold text-base gap-2"
                 >
