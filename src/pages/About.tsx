@@ -49,7 +49,7 @@ const About = () => {
   ];
 
   const team = [
-    { name: "Prabhas Kumar", role: "Founder & CEO", initials: "PK" },
+    { name: "XYZ", role: "Founder & CEO", initials: "XY" },
     { name: "XYZ", role: "Chief Operating Officer", initials: "XY" },
     { name: "XYZ", role: "Head of Technology", initials: "XY" },
     { name: "XYZ", role: "Head of Customer Success", initials: "XY" },
@@ -79,7 +79,7 @@ const About = () => {
                   Building Futures Since 2026
                 </h1>
                 <p className="text-lg text-primary-foreground/80 mb-8 leading-relaxed">
-                  Pro Property is India's most trusted real estate portal, helping millions of people find their dream homes. Founded by Prabhas Kumar with a vision to revolutionize how Indians buy, sell, and rent properties, we've quickly grown to become a leader in the industry.
+                  Pro Property is India's most trusted real estate portal, helping millions of people find their dream homes. Founded by XYZ with a vision to revolutionize how Indians buy, sell, and rent properties, we've quickly grown to become a leader in the industry.
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <Link to="/properties">
@@ -151,7 +151,7 @@ const About = () => {
                 </h2>
                 <div className="space-y-6 text-lg text-muted-foreground">
                   <p className="leading-relaxed">
-                    Founded in 2026 by Prabhas Kumar, Pro Property started with a simple vision: to make property search <span className="text-foreground font-medium">easy, transparent, and accessible</span> for every Indian.
+                    Founded in 2026 by XYZ, Pro Property started with a simple vision: to make property search <span className="text-foreground font-medium">easy, transparent, and accessible</span> for every Indian.
                   </p>
                   <p className="leading-relaxed">
                     What began as a small team with big dreams has now grown into one of India's most trusted real estate platforms, driven by our commitment to verification and exceptional service.
